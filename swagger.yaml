@@ -1,0 +1,358 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/GWELTAZMARY_1/p13/1.0.0
+info:
+  version: "1.0.0"
+  title: home-iot-api
+  description: The API for the EatBacon IOT project
+paths:
+  /account:
+    post:
+      tags:
+        - Account
+      description: returns all the data transaction from the current month of the logged user and the current balance
+      parameters:
+        - in: header
+          name: JWT
+          required: true
+          description: the user JWT
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Return an object with all the transactions of the month and the current account balance inside two variable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentBalance:
+                    type: integer
+                    example: 1500
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        status: 
+                          type: number
+                          example: 200
+                        message:
+                          type: string
+                          example: 'User transactions and bank account succefully fetched'
+                        body:
+                          type: object
+                          properties:
+                            transactionId:
+                              type: string
+                              format: uuid
+                              example: 'EA4CDG7651Z' 
+                            createdThe:
+                              type: string
+                              format: date
+                              example: 2017-07-21
+                            upDatedThe:
+                              type: string
+                              format: date
+                              example: 2019-12-11                              
+                            date:
+                              type: string
+                              format: date
+                              example: 2017-07-21
+                            amount:
+                              type: number
+                              format: double
+                              example: 146.31
+                            currency:
+                              type: string
+                              example: "$"
+                            counterParty:
+                              type: string
+                              example: 'walmart inc'
+                            updatedBalance:
+                              type: number
+                              format: double
+                              example: 2360.64
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      
+  /account/transaction/create:
+    description: create a new transaction from an user bank account
+    parameters:
+      - in: header
+        name: JWT
+        required: true
+        description: the user JWT
+        schema:
+          type: string
+      - in: header
+        name: date
+        required: true
+        description: the transaction date
+        schema:
+          type: string
+          format: date
+      - in: header
+        name: amount
+        description: the amount of the transaction
+        schema:
+          type: number
+          format: double
+        required: true          
+      - in: header
+        name: currency
+        description: the currency of the transaction
+        schema:
+          type: string
+        required: true          
+      - in: header 
+        name: counterParty
+        description: the name of the counterparty
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: type
+        description: the type of the transaction
+        schema:
+          type: string
+      - in: header
+        name: category
+        description: the category of the transaction
+        schema:
+          type: string
+      - in: header
+        name: note
+        description: a note from the user for this transaction
+        schema:
+          type: string
+          
+    put:
+      tags:
+        - Transaction
+      description: create a new transaction for the user bank account
+      parameters:
+        - in: header
+          name: JWT
+          required: true
+          description: the user JWT
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Create a new transaction 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200                    
+                  message:
+                    type: string
+                    example: 'Transaction succefuly created'
+
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+          
+  /account/transaction/{transactionId}:
+    description: return all the detailed information of a specified transaction from an user bank account
+    parameters:
+      - name: transactionId
+        in: path  
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags:
+        - Transaction
+      description: returns all the data from the specified transaction given in the path param
+      parameters:
+        - in: header
+          name: JWT
+          required: true
+          description: the user JWT
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Return an object with all the details of the specified transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionId:
+                    type: string
+                    format: uuid
+                    example: 'EA4CDG7651Z'                    
+                  createdThe:
+                    type: string
+                    format: date
+                    example: 2017-07-21
+                  upDatedThe:
+                    type: string
+                    format: date
+                    example: 2019-12-11
+                  date:
+                    type: string
+                    format: date
+                    example: 2017-07-21
+                  amount:
+                    type: number
+                    format: double
+                    example: 146.30
+                  currency:
+                    type: string
+                    example: "$"
+                  counterParty:
+                    type: string
+                    example: 'walmart inc'
+                  type:
+                    type: string
+                    example: 'grossery shop'
+                  category: 
+                    type: string
+                    example: 'food'
+                  note:
+                    type: string
+                    example: 'Food for the week'
+
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: The ressource you asked doesn't exist anymore
+        '500':
+          description: Internal Server Error
+    put:
+        tags:
+          - Transaction
+        description: Modify the data from a specified transaction from the user bank account
+        parameters:
+          - in: header
+            name: JWT
+            required: true
+            description: the user JWT
+            schema:
+              type: string
+          - in: header
+            name: date
+            description: the transaction date
+            schema:
+              type: string
+              format: date
+          - in: header
+            name: amount
+            description: the amount of the transaction
+            schema:
+              type: number
+              format: double
+          - in: header
+            name: currency
+            description: the currency of the transaction
+            schema:
+              type: string
+          - in: header 
+            name: counterParty
+            description: the name of the counterparty
+            schema:
+              type: string
+          - in: header
+            name: type
+            description: the type of the transaction
+            schema:
+              type: string
+          - in: header
+            name: category
+            description: the category of the transaction
+            schema:
+              type: string
+          - in: header
+            name: note
+            description: a note from the user for this transaction
+            schema:
+              type: string              
+  
+        responses:
+          '200':
+            description: Modify an existing transaction from the user bank account
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    code:
+                      type: number
+                      example: 200                   
+                    upDatedThe:
+                      type: string
+                      format: date
+                      example: 2019-12-11
+                    message:
+                      type: string
+                      example: 'Transaction updated'
+          '400':
+            description: Bad request
+          '401':
+            description: Unauthorized
+          '404':
+            description: The ressource you asked doesn't exist anymore
+          '500':
+            description: Internal Server Error
+
+    delete:
+      tags:
+        - Transaction
+      description: Delete an existing transaction from an user bank account
+      parameters:
+        - in: header
+          name: JWT
+          required: true
+          description: the user JWT
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Delete an existing transaction from an user bank account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    code:
+                      type: number
+                      example: 200                   
+                    upDatedThe:
+                      type: string
+                      format: date
+                      example: 2019-12-11
+                    message:
+                      type: string
+                      example: 'Transaction deleted'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: The ressource you asked doesn't exist anymore
+        '500':
+          description: Internal Server Error  
+  

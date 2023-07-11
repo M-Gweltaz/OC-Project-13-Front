@@ -1,0 +1,62 @@
+.userNav {
+	display: flex;
+	flex-direction: row;
+}
+
+.userContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.userContainer p {
+	margin-left: 0.75em;
+	color: #5d5d5d;
+	font-size: 1em;
+	font-weight: 600;
+}
+
+.userLogoBackground {
+	background-color: #d6d6d6;
+	border-radius: 100%;
+	height: 2em;
+	width: 2em;
+	display: flex;
+}
+
+.userLogoBackground svg {
+	height: 1.5em;
+	width: 1.5em;
+	margin: auto;
+	color: #5d5d5d;
+}
+
+.logoutContainer {
+	display: flex;
+	align-items: center;
+	margin-left: 1.5em;
+}
+
+.logoutContainer svg {
+	margin-right: 0.75em;
+	height: 1.75em;
+	width: 1.75em;
+	transform: rotate(180deg);
+	color: #5d5d5d;
+}
+
+.logoutContainer button {
+	cursor: pointer;
+	border: none;
+	background-color: #fff;
+	border-radius: 15px;
+	color: #5d5d5d;
+	font-size: 1em;
+	font-weight: 600;
+}
+
+.userAuthLogout {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
